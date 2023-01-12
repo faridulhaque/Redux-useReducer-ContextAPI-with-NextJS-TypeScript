@@ -24,17 +24,16 @@ const PostData = () => {
     e.target.reset();
   };
 
+  console.log(postResponse.response);
   useEffect(() => {
-    if(postResponse?.response?.acknowledged){
-      return alert("Your data is added successfully")
+    if (postResponse?.response?.acknowledged) {
+      return alert("Your data is added successfully");
     }
-  },[postResponse]);
+  }, [postResponse.response?.acknowledged]);
 
   return (
     <div>
-      {
-        postResponse.loading && <h1 className="heading">Posting Data...</h1>
-      }
+      {postResponse.loading && <h1 className="heading">Posting Data...</h1>}
       <h1 className="heading">Post data with redux</h1>
       <div className="form-wrapper">
         <form onSubmit={handleSubmit}>
