@@ -14,10 +14,6 @@ const DataTable = () => {
 
   const { state } = useContext(GlobalContext);
 
-  let content: any;
-
-  console.log(deleteItem);
-
   useEffect(() => {
     setHasMounted(true);
     dispatch(getAllData());

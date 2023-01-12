@@ -1,11 +1,12 @@
 import { POST_DATA_ERROR, POST_DATA_RECEIVED, POST_DATA_START } from "../../constants/postDataConstants";
 
 const initialState = {
-  response: [],
+  response: null,
   loading: false,
   error: null,
 };
 const postDataReducer = (state = initialState, action: any) => {
+  
   switch (action.type) {
     case POST_DATA_START:
       return {
@@ -24,7 +25,7 @@ const postDataReducer = (state = initialState, action: any) => {
     case POST_DATA_ERROR:
       return {
         ...state,
-        response: null,
+        response: {},
         loading: false,
         error: action.payload,
       };

@@ -38,7 +38,6 @@ export const deleteData = (id:string) => async (dispatch:any) => {
       })
       const data:any = await res.json();
       dispatch({ type: DELETE_DATA_RECEIVED, payload: data.acknowledged });
-      console.log(data.acknowledged);
     } catch (error:any) {
       dispatch({ type: DELETE_DATA_ERROR, payload: error.message });
     }

@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { postData } from "../../redux/actions/allDataActions";
 
 const PostData = () => {
   const dispatch: any = useDispatch();
+  const postResponse = useSelector((state: any) => state?.postResponse);
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
@@ -21,8 +24,17 @@ const PostData = () => {
     e.target.reset();
   };
 
+  useEffect(() => {
+    if(postResponse?.response?.acknowledged){
+      return alert("Your data is added successfully")
+    }
+  },[postResponse]);
+
   return (
     <div>
+      {
+        postResponse.loading && <h1 className="heading">Posting Data...</h1>
+      }
       <h1 className="heading">Post data with redux</h1>
       <div className="form-wrapper">
         <form onSubmit={handleSubmit}>
