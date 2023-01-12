@@ -3,29 +3,43 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { GlobalContext } from "../../pages/_app";
-import { getAllData } from "../../redux/actions/allDataActions";
+import { deleteData, getAllData } from "../../redux/actions/allDataActions";
 
 const DataTable = () => {
   const { data, loading, error } = useSelector((state: any) => state?.data);
+  const deleteItem = useSelector((state: any) => state?.deleteItem);
+
   const [hasMounted, setHasMounted] = useState<boolean>(false);
   const dispatch: any = useDispatch();
 
   const { state } = useContext(GlobalContext);
 
-  //   const {}
+  let content: any;
+
+  console.log(deleteItem);
 
   useEffect(() => {
     setHasMounted(true);
     dispatch(getAllData());
   }, [dispatch]);
 
+  useEffect(() => {
+    if (deleteItem.response) {
+      dispatch(getAllData());
+    }
+  }, [deleteItem, dispatch]);
+
   if (!hasMounted) {
     return null;
   }
 
+  const handleDelete = (id: string) => {
+    dispatch(deleteData(id));
+  };
+
   return (
     <table>
-      {loading && <h1 className="heading">Loading</h1>}
+      {loading || (deleteItem.loading && <h1 className="heading">Loading</h1>)}
       <tr>
         <th>Name</th>
         <th>Quantity</th>
@@ -45,7 +59,7 @@ const DataTable = () => {
           )}
           {state.method === "DELETE" && (
             <td>
-              <button>Delete</button>
+              <button onClick={() => handleDelete(d._id)}>Delete</button>
             </td>
           )}
         </tr>
